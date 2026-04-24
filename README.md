@@ -117,21 +117,6 @@ cd migrate
 # Run tests
 go test ./...
 
-# Run linter
-golangci-lint run
-
-# Build CLI
-go build -o migrate ./cmd/migrate
+# Build the CLI
+go build ./cmd/migrate
 ```
-
-## Contributing
-
-Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) and submit pull requests to our [GitHub repository](https://github.com/your-org/migrate).
-
-## License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgements
-
-This project is a fork of [golang-migrate/migrate](https://github.com/golang-migrate/migrate). Thanks to all the original contributors.
