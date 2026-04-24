@@ -22,7 +22,8 @@ var ErrLocked = errors.New("database locked")
 var ErrLockTimeout = errors.New("lock timeout")
 
 // DefaultPrefetchMigrations is the default number of migrations to prefetch.
-const DefaultPrefetchMigrations = 10
+// Increased from 10 to 15 to reduce I/O overhead when running large migration sets.
+const DefaultPrefetchMigrations = 15
 
 // DefaultLockTimeout is the default timeout for acquiring a database lock.
 // Increased from 15 to 30 seconds to reduce lock timeout errors in slow CI environments.
@@ -109,5 +110,4 @@ func (m *Migrate) logPrintf(format string, v ...interface{}) {
 	}
 }
 
-// logVerbosePrintf logs a verbose message if a logger is set and verbose mode is enabled.
-func (m *Migrat
+// logVerbosePri
