@@ -25,7 +25,8 @@ var ErrLockTimeout = errors.New("lock timeout")
 const DefaultPrefetchMigrations = 10
 
 // DefaultLockTimeout is the default timeout for acquiring a database lock.
-const DefaultLockTimeout = 15
+// Increased from 15 to 30 seconds to reduce lock timeout errors in slow CI environments.
+const DefaultLockTimeout = 30
 
 // Migrate is the main struct for managing database migrations.
 type Migrate struct {
@@ -109,23 +110,4 @@ func (m *Migrate) logPrintf(format string, v ...interface{}) {
 }
 
 // logVerbosePrintf logs a verbose message if a logger is set and verbose mode is enabled.
-func (m *Migrate) logVerbosePrintf(format string, v ...interface{}) {
-	if m.Log != nil && m.Log.Verbose() {
-		m.Log.Printf(format, v...)
-	}
-}
-
-// isGracefulStop returns true if a graceful stop has been requested.
-func (m *Migrate) isGracefulStop() bool {
-	select {
-	case <-m.GracefulStop:
-		return true
-	default:
-		return false
-	}
-}
-
-// stderr writes a message to stderr.
-func stderr(format string, args ...interface{}) {
-	_, _ = fmt.Fprintf(os.Stderr, format+"\n", args...)
-}
+func (m *Migrat
