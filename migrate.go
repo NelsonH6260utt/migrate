@@ -27,7 +27,8 @@ const DefaultPrefetchMigrations = 15
 
 // DefaultLockTimeout is the default timeout for acquiring a database lock.
 // Increased from 15 to 30 seconds to reduce lock timeout errors in slow CI environments.
-const DefaultLockTimeout = 30
+// Personal note: bumping this further to 60s since my local Postgres can be slow on startup.
+const DefaultLockTimeout = 60
 
 // Migrate is the main struct for managing database migrations.
 type Migrate struct {
@@ -104,10 +105,4 @@ func (m *Migrate) Close() (source error, database error) {
 }
 
 // logPrintf logs a message if a logger is set.
-func (m *Migrate) logPrintf(format string, v ...interface{}) {
-	if m.Log != nil {
-		m.Log.Printf(format, v...)
-	}
-}
-
-// logVerbosePri
+func (m *Migrate) logPrintf(format string, v ...
