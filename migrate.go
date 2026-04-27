@@ -55,7 +55,7 @@ type Migrate struct {
 	// LockTimeout controls how long to wait for a database lock (in seconds).
 	LockTimeout uint
 
-	stateMu sync.Mutex
+	stateMu  sync.Mutex
 	isLocked bool
 }
 
@@ -89,6 +89,8 @@ func New(sourceURL, databaseURL string) (*Migrate, error) {
 }
 
 // Close closes the source and database connections.
+// Note: errors from both drivers are returned independently so callers can
+// inspect each failure without one masking the other.
 func (m *Migrate) Close() (source error, database error) {
 	databaseSrvClose := make(chan error)
 	sourceSrvClose := make(chan error)
@@ -104,5 +106,4 @@ func (m *Migrate) Close() (source error, database error) {
 	return <-sourceSrvClose, <-databaseSrvClose
 }
 
-// logPrintf logs a message if a logger is set.
-func (m *Migrate) logPrintf(format string, v ...
+//
