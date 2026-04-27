@@ -74,6 +74,9 @@ func main() {
     }
     defer m.Close()
 
+    // Set a lock timeout to avoid hanging indefinitely on busy databases
+    m.LockTimeout = 15 * time.Second
+
     if err := m.Up(); err != nil && err != migrate.ErrNoChange {
         log.Fatal(err)
     }
@@ -116,7 +119,4 @@ cd migrate
 
 # Run tests
 go test ./...
-
-# Build the CLI
-go build ./cmd/migrate
 ```
